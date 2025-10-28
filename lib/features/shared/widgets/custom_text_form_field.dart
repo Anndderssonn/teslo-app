@@ -56,9 +56,9 @@ class CustomTextFormField extends StatelessWidget {
           enabledBorder: border,
           focusedBorder: border,
           errorBorder: border.copyWith(
-              borderSide: BorderSide(color: Colors.red.shade800)),
+              borderSide: BorderSide(color: Colors.red.shade100)),
           focusedErrorBorder: border.copyWith(
-              borderSide: BorderSide(color: Colors.red.shade800)),
+              borderSide: BorderSide(color: Colors.red.shade100)),
           isDense: true,
           label: label != null ? Text(label!) : null,
           hintText: hint,
