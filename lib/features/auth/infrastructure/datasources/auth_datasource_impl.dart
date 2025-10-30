@@ -20,19 +20,36 @@ class AuthDatasourceImpl extends AuthDatasource {
       final user = UserMapper.userJsonToEntity(response.data);
       return user;
     } on DioException catch (error) {
-      if (error.response?.statusCode == 401) throw WrongCredentials();
-      if (error.type == DioExceptionType.connectionTimeout) {
-        throw ConnectionTimeout();
+      if (error.response?.statusCode == 401) {
+        throw CustomError(
+            error.response?.data['message'] ?? 'Invalid credentials');
       }
-      throw CustomError('Something wrong happened', 500);
+      if (error.type == DioExceptionType.connectionTimeout) {
+        throw CustomError('No internet connection');
+      }
+      throw Exception();
     } catch (error) {
-      throw CustomError('Something wrong happened', 500);
+      throw Exception();
     }
   }
 
   @override
-  Future<User> register(String email, String password, String fullName) {
-    // TODO: implement register
-    throw UnimplementedError();
+  Future<User> register(String email, String password, String fullName) async {
+    try {
+      final response = await dio.post('/auth/register',
+          data: {'email': email, 'password': password, 'fullName': fullName});
+      final user = UserMapper.userJsonToEntity(response.data);
+      return user;
+    } on DioException catch (error) {
+      if (error.response?.statusCode == 400) {
+        throw CustomError(error.response?.data['message'] ?? 'Unknown error');
+      }
+      if (error.type == DioExceptionType.connectionTimeout) {
+        throw CustomError('No internet connection');
+      }
+      throw Exception();
+    } catch (error) {
+      throw Exception();
+    }
   }
 }

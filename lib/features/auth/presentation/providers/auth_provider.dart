@@ -17,16 +17,28 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       final user = await authRepository.login(email, password);
       _setLoggedUser(user);
-    } on WrongCredentials {
-      logout('Invalid credentials');
-    } on ConnectionTimeout {
-      logout('Request timeout');
+    } on CustomError catch (error) {
+      logout(error.message);
     } catch (error) {
       logout('Unknown error');
     }
   }
 
-  void registerUser(String email, String password) async {}
+  void registerUser(String fullName, String email, String password,
+      String confirmPassword) async {
+    if (password != confirmPassword) {
+      logout('Passwords are not the same');
+      return;
+    }
+    try {
+      final user = await authRepository.register(email, password, fullName);
+      _setLoggedUser(user);
+    } on CustomError catch (error) {
+      logout(error.message);
+    } catch (error) {
+      logout('Unknown error');
+    }
+  }
 
   void checkAuthStatus() async {}
 
