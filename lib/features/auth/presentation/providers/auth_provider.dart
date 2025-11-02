@@ -3,8 +3,7 @@ import 'package:teslo_shop/features/auth/domain/domain.dart';
 import 'package:teslo_shop/features/auth/infrastructure/infrastructure.dart';
 import 'package:teslo_shop/features/shared/shared.dart';
 
-final authProvider =
-    StateNotifierProvider.autoDispose<AuthNotifier, AuthState>((ref) {
+final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   final authRepository = AuthRepositoryImpl();
   final keyValueStorage = KeyValueStorageImpl();
   return AuthNotifier(
