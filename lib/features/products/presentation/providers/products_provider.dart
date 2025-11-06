@@ -16,8 +16,8 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
     loadNextPage();
   }
 
-  Future<void> loadNextPage() async {
-    if (state.isLastPage || state.isLastPage) return;
+  Future loadNextPage() async {
+    if (state.isLoading || state.isLastPage) return;
     state = state.copyWith(isLoading: true);
     final products = await productsRepository.getProductsByPage(
         limit: state.limit, offset: state.offset);
