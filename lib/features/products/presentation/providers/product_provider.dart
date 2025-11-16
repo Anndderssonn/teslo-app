@@ -42,7 +42,7 @@ class ProductNotifier extends StateNotifier<ProductState> {
       final product = await productsRespository.getProductById(state.id);
       state = state.copyWith(isLoading: false, product: product);
     } catch (error) {
-      print('Load Product Error: $error');
+      throw Exception();
     }
   }
 }

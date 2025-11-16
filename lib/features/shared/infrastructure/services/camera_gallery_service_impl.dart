@@ -10,7 +10,6 @@ class CameraGalleryServiceImpl extends CameraGalleryService {
       imageQuality: 80,
     );
     if (photo == null) return null;
-    print('We have an image: ${photo.path}');
     return photo.path;
   }
 
@@ -21,7 +20,6 @@ class CameraGalleryServiceImpl extends CameraGalleryService {
         imageQuality: 80,
         preferredCameraDevice: CameraDevice.rear);
     if (photo == null) return null;
-    print('We have an image: ${photo.path}');
     return photo.path;
   }
 }
